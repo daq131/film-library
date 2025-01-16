@@ -1,4 +1,5 @@
 import random
+import datetime
 
 class Movie:
     def __init__(self, title, year, genre, num_of_plays):
@@ -11,7 +12,7 @@ class Movie:
         self._current_num_of_plays = self.num_of_plays
         
     def __str__(self):
-        return f"{self.title} {self.year}, "
+        return f"{self.title} ({self.year}), "
         
     def play(self):
         self.current_num_of_plays += 1
@@ -48,53 +49,44 @@ class Library:
         self.library.append(object)
         
     def get_movies(self):
-          return [i.title for i in self.library if type(i) == Movie]      
+        return sorted(i.title for i in self.library if type(i) == Movie)     
     
     def get_series(self):
-          return [i.title for i in self.library if type(i) == Series]
+        return sorted(i.title for i in self.library if type(i) == Series)
         
-    def search():
-        pass
-    
-    def run_gen_views(func):
-        def wrapper(*args, **kwargs):
-            for i in range(10):
-                func(*args, **kwargs)
-        return wrapper
-    
-    @run_gen_views
+    def search(self):
+        get_title = input("Podaj poszukiwany tytuł: ")
+        for i in library:               
+            if get_title == i.title:
+                return f'Mamy w bazie taki tytuł: {i.title}'
+                break
+            else:
+                pass
+
     def generate_views(self):
         v = random.choice(self.library)
         v.num_of_plays = random.randint(1, 101)
-        return f'{v} num_of_plays: {v.num_of_plays}'
-
+        return f'{v.title} z num_of_plays: {v.num_of_plays}'
+    
     def top_titles(self):
-        top3 = sorted(i.num_of_plays for i in library)
-        return top3[::-1]
-
-f1 = Movie("Kiler" , 2005 , "comedy" , 0)
+        by_num_of_plays = sorted(library, key=lambda movie: movie.num_of_plays)
+        res = by_num_of_plays[::-1]
+        for i in res:
+            return i.title
+ 
+f1 = Movie("Kiler", 2005, "comedy", 5)
 f2 = Movie("Django", 2012, "western", 20)
-s1 = Series("Friends", 1994, "comedy", 99, 1, 5)
+f3 = Movie("Hobbit", 2015, "dramat", 45)
+s1 = Series("Friends", 1994, "comedy", 22, 1, 5)
 s2 = Series("Friends", 1994, "comedy", 100, 4, 15)
+s3 = Series("Band of the Brothers", 1994, "dramat", 84, 1, 5)
 
-library = [f2, f1, s1, s2]
+print("Biblioteka filmów: ")
+library = [f2, f1, f3, s1, s2, s3]
 for i in library:
     print(i)
 
 l = Library()
-print(l.add(f1))
-print(l.get_movies())
-print(l.get_series())
-print(l.generate_views())
+print(f'Losowa pozycja z biblioteki: {l.generate_views()}')
+print(f'Najpopularniejsze filmy i seriale z dnia: {datetime.datetime.today().strftime('%d.%m.%Y')}:')
 print(l.top_titles())
-# print(l.run_gen_views())
-# z = l.add(f1)
-# print(z)
-
-# film1.play()
-# print(f"{film1.num_of_plays}")
-# film1.current_num_of_plays = 21
-# print(f"Number of plays: {film1.current_num_of_plays}")
-
-# serial1.play()
-# print(f"Number of plays this serial: {serial1.current_num_of_plays}")

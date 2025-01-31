@@ -39,8 +39,11 @@ class Series(Movie):
         return f'{self.title} S{self.sezon_number:02d}E{self.episode_number:02d},'
   
 class Library:    
-    def __init__(self):
-        self.library = library
+    def __init__(self, library = None):
+        if library is None:
+            self.library = library
+        else:
+            self.library = []
         
     def __str__(self):
         return f'{self.title}'
@@ -49,10 +52,10 @@ class Library:
         self.library.append(object)
         
     def get_movies(self):
-        return sorted(i.title for i in self.library if type(i) == Movie)     
+        return sorted(i.title for i in library if type(i) == Movie)
     
     def get_series(self):
-        return sorted(i.title for i in self.library if type(i) == Series)
+        return sorted(i.title for i in library if type(i) == Series)
         
     def search(self):
         get_title = input("Podaj poszukiwany tytuł: ")
@@ -64,7 +67,7 @@ class Library:
                 pass
 
     def generate_views(self):
-        v = random.choice(self.library)
+        v = random.choice(library)
         v.num_of_plays = random.randint(1, 101)
         return f'{v.title} z num_of_plays: {v.num_of_plays}'
     
@@ -78,9 +81,11 @@ f1 = Movie("Kiler", 2005, "comedy", 5)
 f2 = Movie("Django", 2012, "western", 20)
 f3 = Movie("Hobbit", 2015, "dramat", 45)
 s1 = Series("Friends", 1994, "comedy", 22, 1, 5)
-s2 = Series("Friends", 1994, "comedy", 100, 4, 15)
+s2 = Series("Friends", 1994, "comedy", 9, 4, 15)
 s3 = Series("Band of the Brothers", 1994, "dramat", 84, 1, 5)
 
+movies = []
+library = Library(library = movies)
 print("Biblioteka filmów: ")
 library = [f2, f1, f3, s1, s2, s3]
 for i in library:
@@ -90,3 +95,4 @@ l = Library()
 print(f'Losowa pozycja z biblioteki: {l.generate_views()}')
 print(f'Najpopularniejsze filmy i seriale z dnia: {datetime.datetime.today().strftime('%d.%m.%Y')}:')
 print(l.top_titles())
+# print(l.search())
